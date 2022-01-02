@@ -17,3 +17,8 @@ INSERT INTO BionicType VALUES
 ('TY001', 'Eye', 65),
 ('TY002', 'Arm', 75),
 ('TY003', 'Foot', 97);
+
+INSERT INTO Bionic VALUES 
+('BI001', 'TY002', 'Riot Wrest', 3 ,'2020-10-29', 925000),
+('BI002', 'TY003', 'Mania Lest', 1 ,'2020-10-29', 3575000),
+('BI003', 'TY001', 'Hybrid Eylest', 10 ,'2020-10-29', 125000);
