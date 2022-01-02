@@ -12,3 +12,8 @@ INSERT INTO Customer VALUES
 ('CU001', 'Boxin Pacloss', '085278592105', '304 Citarum Street', 'Male', 'boxloss@fmail.com','2002-05-17'),
 ('CU002', 'Sajida Muna', '083495203473', '11 Holland Rees', 'Female', 'sajmun290@breemail.com','1995-11-09'),
 ('CU003', 'Dinda Jadawong', '084289410249', '2 Paulo Lemans', 'Female', 'dindawong00@suiimaik.com','1998-09-25');
+
+INSERT INTO BionicType VALUES 
+('TY001', 'Eye', 65),
+('TY002', 'Arm', 75),
+('TY003', 'Foot', 97);
