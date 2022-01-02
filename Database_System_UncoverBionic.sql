@@ -1,3 +1,6 @@
+use master
+go
+drop database UncoverBionic
 CREATE DATABASE UncoverBionic
 GO
 USE UncoverBionic
@@ -64,7 +67,7 @@ CREATE TABLE SalesTransaction(
 CREATE TABLE PurchaseTransactionDetail(
 	PurchaseID CHAR(5) FOREIGN KEY REFERENCES PurchaseTransaction(PurchaseID) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
 	BionicID CHAR(5) FOREIGN KEY REFERENCES Bionic(BionicID) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
-	PurchaseQuantity INT CHECK (PurchaseQuanity > 0) NOT NULL,
+	PurchaseQuantity INT CHECK (PurchaseQuantity > 0) NOT NULL,
 	PRIMARY KEY(PurchaseID, BionicID)
 );
 
