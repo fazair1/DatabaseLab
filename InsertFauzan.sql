@@ -15,3 +15,9 @@ VALUES
 ('CU007','Sapei Derman','086274289532','Jalan Ben RT 10 RW 03','Male','speiderman@gmail.com','2004-8-25'),
 ('CU008','Hulek Ijo','086268425734','Jalan Smash RT 08 RW 09','Male','hulekijo@gmail.com','2006-10-24'),
 ('CU009','Thoriq Thunder','086218760953','Jalan Val RT 01 RW 10','Male','thoriqthunder@gmail.com','2010-7-10');
+
+INSERT INTO BionicType
+VALUES
+('TY007','Foot',78),
+('TY008','Leg',80),
+('TY009','Eye',100);
