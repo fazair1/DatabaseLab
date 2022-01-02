@@ -47,3 +47,14 @@ INSERT INTO BionicType VALUES
 ('TY006', 'Eye', 71)
 ;
 
+INSERT INTO Bionic VALUES 
+('BI004', 'TY004', 'Encode', 2 ,'2021-11-04', 4500000)
+;
+
+INSERT INTO Bionic VALUES 
+('BI005', 'TY005', 'SeaBasilisk', 5 ,'2009-01-27', 2800000)
+;
+
+INSERT INTO Bionic VALUES 
+('BI006', 'TY006', 'Ignite', 13 ,'2015-07-23', 925000)
+;
