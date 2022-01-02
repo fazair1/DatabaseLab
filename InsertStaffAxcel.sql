@@ -22,3 +22,16 @@ INSERT INTO Vendor VALUES
 INSERT INTO Vendor VALUES 
 ('VE006', 'Gusion Paxley', '082358975648', '5 Aberleen Cluster', 'emperorgusion@gmail.com')
 ;
+
+INSERT INTO Customer VALUES 
+('CU004', 'Ramado Dragomax', '083254665432', '20 simpang leomord', 'Male', 'salamdaribinjai@gmail.com','2001-11-21')
+;
+
+INSERT INTO Customer VALUES 
+('CU005', 'Hakku Venna', '085567432917', 'D9 The Suites', 'Female', 'bananamcd@gmail.com','2003-05-01')
+;
+
+INSERT INTO Customer VALUES 
+('CU006', 'Sunarto Up', '088876554765', '46 Antapani Reprepan', 'Male', 'baratsjoget@gmail.com','1958-12-29')
+;
+
