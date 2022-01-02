@@ -1,6 +1,6 @@
 
 INSERT INTO Staff VALUES 
-('ST004', 'Reinhart Tillman', 'TillHart@gmail.com', '085976390712', '21 Papandayan Fruit','1998-12-12','Male', 9500000)
+('ST004', 'Reinhart Kjelberg', 'TillHart@gmail.com', '085976390712', '21 Papandayan Fruit','1998-12-12','Male', 9500000)
 ;
 
 INSERT INTO Staff VALUES 
