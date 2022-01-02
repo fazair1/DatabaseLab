@@ -11,3 +11,14 @@ INSERT INTO Staff VALUES
 ('ST006', 'Jenny Lindzey', 'JennyGurl@gmail.com', '081221345478', '11 Land Of Dawn','1999-06-17','Female', 8000000)
 ;
 
+INSERT INTO Vendor VALUES 
+('VE004', 'Randy Tillman', '081299878413', '52 Ares Street', 'randyman@gmail.com')
+;
+
+INSERT INTO Vendor VALUES 
+('VE005', 'Guinevere Baroque', '087785976844', '37 Castle George', 'supermagicguin@gmail.com')
+;
+
+INSERT INTO Vendor VALUES 
+('VE006', 'Gusion Paxley', '082358975648', '5 Aberleen Cluster', 'emperorgusion@gmail.com')
+;
