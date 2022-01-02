@@ -35,3 +35,15 @@ INSERT INTO Customer VALUES
 ('CU006', 'Sunarto Up', '088876554765', '46 Antapani Reprepan', 'Male', 'baratsjoget@gmail.com','1958-12-29')
 ;
 
+INSERT INTO BionicType VALUES 
+('TY004', 'Hand', 100)
+;
+
+INSERT INTO BionicType VALUES 
+('TY005', 'Leg', 88)
+;
+
+INSERT INTO BionicType VALUES 
+('TY006', 'Eye', 71)
+;
+
