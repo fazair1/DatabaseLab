@@ -38,7 +38,7 @@ CREATE TABLE Customer(
 CREATE TABLE BionicType(
 	BionicTypeID CHAR(5) PRIMARY KEY CHECK (BionicTypeID LIKE 'TY[0-9][0-9][0-9]'),
 	BionicTypeName VARCHAR(50) CHECK (BionicTypeName IN ('Hand', 'Foot', 'Leg', 'Arm', 'Eye')) NOT NULL,
-	BionicTypeDurability VARCHAR(50) CHECK (BionicTypeDurability BETWEEN 50 AND 100) NOT NULL
+	BionicTypeDurability INT CHECK (BionicTypeDurability BETWEEN 50 AND 100) NOT NULL
 );
 
 CREATE TABLE Bionic(
