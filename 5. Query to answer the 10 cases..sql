@@ -1,7 +1,9 @@
 --1
 SELECT	StaffID, [Total Purchase] = COUNT(PurchaseID)
-	FROM PurchaseTransaction,Vendor
-	WHERE PurchaseTransaction.VendorId = Vendor.VendorID AND VendorName LIKE '% Tillman' AND COUNT(PurchaseID) > 1
+	FROM Vendor JOIN PurchaseTransaction ON Vendor.VendorID = PurchaseTransaction.VendorID
+	WHERE VendorName LIKE '% Tillman' 
+	GROUP BY PurchaseTransaction.StaffID
+	HAVING COUNT(PurchaseID) > 1;
 
 --2
 SELECT	StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SalesBionicQuan
@@ -17,10 +19,12 @@ SELECT	SalesId, CustomerName, CustomerGender, [Total Quantity Purchased] = Purch
 
 --4
 SELECT	[Purchase Id] = REPLACE(PurchaseID, 'PU', 'Purchase '), [Total Purchase Detail] = COUNT(PurchaseID), [Highest Bionic Price] = MAX(BionicPrice), BionicTypeName
-	FROM ((PurchaseTransaction 
-	INNER JOIN Bionic ON PurchaseTransaction.BionicID = Bionic.BionicID) 
+	FROM ((PurchaseTransactionDetail 
+	INNER JOIN Bionic ON PurchaseTransactionDetail.BionicID = Bionic.BionicID) 
 	INNER JOIN BionicType ON Bionic.BionicTypeID = BionicType.BionicTypeID)
-	WHERE BionicTypeName LIKE 'Hand' AND COUNT(PurchaseID) > 1
+	WHERE BionicTypeName LIKE 'Hand'
+	GROUP BY BionicType.BionicTypeName, PurchaseTransactionDetail.PurchaseID
+	HAVING COUNT(PurchaseID) > 1;
 
 --5
 
