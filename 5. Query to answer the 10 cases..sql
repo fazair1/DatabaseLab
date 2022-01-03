@@ -6,9 +6,11 @@ SELECT	StaffID, [Total Purchase] = COUNT(PurchaseID)
 	HAVING COUNT(PurchaseID) > 1;
 
 --2
-SELECT	StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SalesBionicQuan
-	FROM SalesTransaction,Staff
-	WHERE SalesTransaction.StaffId = Staff.StaffID AND (StaffSalary BETWEEN 8000000 AND 10000000) AND SalesBionicQuan > 10
+SELECT	Staff.StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SalesQuanity
+	FROM ((SalesTransactionDetail 
+	INNER JOIN SalesTransaction ON SalesTransactionDetail.SalesID = SalesTransaction.SalesID) 
+	INNER JOIN Staff ON SalesTransaction.StaffID = Staff.StaffID)
+	WHERE (StaffSalary BETWEEN 8000000 AND 10000000) AND SalesQuanity > 10
 
 --3
 SELECT	SalesId, CustomerName, CustomerGender, [Total Quantity Purchased] = PurchaseBionicQuan, [Total Bionic Purchased] = COUNT(PurchaseID), [SalesDate] = (CONVERT(varchar,SalesDate,7) as [MMM DD,YYYY]) 
