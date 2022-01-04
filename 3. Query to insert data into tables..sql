@@ -98,7 +98,7 @@ INSERT INTO PurchaseTransaction VALUES
 ('PU018', 'ST007', 'VE007','2018-07-25'),
 ('PU019', 'ST009', 'VE008','2018-03-01'),
 ('PU020', 'ST008', 'VE009','2018-08-08'),
-('PU021', 'ST007', 'VE009','2018-11-05'),
+('PU021', 'ST007', 'VE009','2018-11-05');
 
 
 INSERT INTO SalesTransaction VALUES 
@@ -122,7 +122,7 @@ INSERT INTO SalesTransaction VALUES
 ('SA018', 'ST008', 'CU007','2020-08-22'),
 ('SA019', 'ST008', 'CU009','2020-07-07'),
 ('SA020', 'ST009', 'CU008','2020-01-27'),
-('SA021', 'ST009', 'CU009','2020-02-09'),
+('SA021', 'ST009', 'CU009','2020-02-09');
 
 
 --Transaction Detail Table
@@ -148,7 +148,7 @@ INSERT INTO PurchaseTransactionDetail VALUES
 ('PU018', 'BI007', 5),
 ('PU019', 'BI008', 7),
 ('PU020', 'BI009', 6),
-('PU021', 'BI007', 3),
+('PU021', 'BI007', 3);
  
 
 INSERT INTO SalesTransactionDetail VALUES 
@@ -172,4 +172,4 @@ INSERT INTO SalesTransactionDetail VALUES
 ('SA018', 'BI007', 8),
 ('SA019', 'BI008', 5),
 ('SA020', 'BI009', 3),
-('SA021', 'BI008', 1),
+('SA021', 'BI008', 1);
