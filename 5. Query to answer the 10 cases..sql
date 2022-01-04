@@ -13,11 +13,14 @@ SELECT	Staff.StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SalesQuanity
 	WHERE (StaffSalary BETWEEN 8000000 AND 10000000) AND SalesQuanity > 10
 
 --3
-SELECT	SalesId, CustomerName, CustomerGender, [Total Quantity Purchased] = PurchaseBionicQuan, [Total Bionic Purchased] = COUNT(PurchaseID), [SalesDate] = (CONVERT(varchar,SalesDate,7) as [MMM DD,YYYY]) 
-	FROM ((SalesTransaction 
-	INNER JOIN PurchaseTransaction ON SalesTransaction.StaffId = PurchaseTransaction.StaffID) 
-	INNER JOIN Customer ON SalesTransaction.CustomerId = Customer.CustomerID)
-	WHERE CustomerGender LIKE 'Female' AND PurchaseBionicQuan > 7
+SELECT	SalesTransaction.SalesID, CustomerName, CustomerGender, [Total Quantity Purchased] = PurchaseQuantity, [Total Bionic Purchased] = COUNT(PurchaseTransaction.PurchaseID), [SalesDate] = (CONVERT(varchar,SalesDate,7)) 
+	FROM SalesTransaction INNER JOIN
+                  Customer ON SalesTransaction.CustomerID = Customer.CustomerID INNER JOIN
+                  SalesTransactionDetail ON SalesTransaction.SalesID = SalesTransactionDetail.SalesID CROSS JOIN
+                  PurchaseTransactionDetail INNER JOIN
+                  PurchaseTransaction ON PurchaseTransactionDetail.PurchaseID = PurchaseTransaction.PurchaseID
+	WHERE CustomerGender LIKE 'Female' AND PurchaseQuantity > 7
+	GROUP BY SalesTransaction.SalesID, CustomerName, CustomerGender,PurchaseQuantity,PurchaseTransaction.PurchaseID,SalesDate
 
 --4
 SELECT	[Purchase Id] = REPLACE(PurchaseID, 'PU', 'Purchase '), [Total Purchase Detail] = COUNT(PurchaseID), [Highest Bionic Price] = MAX(BionicPrice), BionicTypeName
