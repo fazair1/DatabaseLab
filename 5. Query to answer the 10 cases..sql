@@ -6,12 +6,14 @@ SELECT	StaffID, [Total Purchase] = COUNT(PurchaseID)
 	HAVING COUNT(PurchaseID) > 1;
 
 --2
-SELECT	Staff.StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SalesQuanity
+SELECT Staff.StaffID, StaffName, StaffSalary, [Total Bionic Sold] = SUM(SalesQuanity)
 	FROM ((SalesTransactionDetail 
 	INNER JOIN SalesTransaction ON SalesTransactionDetail.SalesID = SalesTransaction.SalesID) 
 	INNER JOIN Staff ON SalesTransaction.StaffID = Staff.StaffID)
-	WHERE (StaffSalary BETWEEN 8000000 AND 10000000) AND SalesQuanity > 10
-
+	WHERE (StaffSalary BETWEEN 8000000 AND 10000000)
+	GROUP BY Staff.StaffID, StaffName, StaffSalary
+	HAVING SUM(SalesQuanity)>10
+			
 --3
 SELECT	SalesTransaction.SalesID, CustomerName, CustomerGender, [Total Quantity Purchased] = PurchaseQuantity, [Total Bionic Purchased] = COUNT(PurchaseTransaction.PurchaseID), [SalesDate] = (CONVERT(varchar,SalesDate,7)) 
 	FROM SalesTransaction INNER JOIN
