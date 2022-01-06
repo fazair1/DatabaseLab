@@ -74,6 +74,6 @@ CREATE TABLE PurchaseTransactionDetail(
 CREATE TABLE SalesTransactionDetail(
 	SalesID CHAR(5) FOREIGN KEY REFERENCES SalesTransaction(SalesID) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
 	BionicID CHAR(5) FOREIGN KEY REFERENCES Bionic(BionicID) ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
-	SalesQuanity INT CHECK (SalesQuanity > 0) NOT NULL,
+	SalesQuantity INT CHECK (SalesQuantity > 0) NOT NULL,
 	PRIMARY KEY(SalesID, BionicID)
 );
