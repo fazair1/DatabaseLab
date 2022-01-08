@@ -150,7 +150,7 @@ INSERT INTO PurchaseTransactionDetail VALUES
 ('PU017', 'BI010', 7),
 ('PU017', 'BI011', 12),
 ('PU018', 'BI011', 5),
-('PU019', 'BI012', 14),
+('PU019', 'BI010', 14),
 ('PU019', 'BI012', 18),
 ('PU020', 'BI010', 4);
  
