@@ -16,3 +16,10 @@ SELECT s.StaffName, [StaffSalary]=CONCAT('Rp. ',StaffSalary), StaffGender, [Purc
 		AND PurchaseDate LIKE '2020-%-%'
 
 --6
+SELECT st.SalesID, s.StaffID, StaffName, StaffSalary, [StaffGender]=LEFT(StaffGender,1), BionicName, [Total Sold Price] = BionicPrice*SalesQuantity, [SalesDate] = (CONVERT(varchar,SalesDate,106))
+	FROM SalesTransaction st
+		JOIN Staff s ON st.StaffID=s.StaffID
+		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
+		JOIN Bionic b ON b.BionicID=std.BionicID
+	WHERE BionicPrice*SalesQuantity > (SELECT AVG(BionicPrice) FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID)
+		AND StaffSalary < 5000000
