@@ -36,8 +36,9 @@ SELECT	[Purchase Id] = REPLACE(PurchaseID, 'PU', 'Purchase '), [Total Purchase D
 SELECT s.StaffName, [StaffSalary]=CONCAT('Rp. ',StaffSalary), StaffGender, [PurchaseDate] = (CONVERT(varchar,PurchaseDate,107)), VendorName
 	FROM Staff s 
 		JOIN PurchaseTransaction pt ON s.StaffID=pt.StaffID
-		JOIN Vendor v ON pt.VendorID=v.VendorID
-	WHERE StaffSalary > (SELECT AVG(StaffSalary) FROM Staff)
+		JOIN Vendor v ON pt.VendorID=v.VendorID,
+		(SELECT [AVGSalary] = AVG(StaffSalary) FROM Staff) AS AVGSalary
+	WHERE StaffSalary > AVGSalary
 		AND PurchaseDate LIKE '2020-%-%'
 
 --6
@@ -45,8 +46,9 @@ SELECT [SalesId] = st.SalesID, [StaffId] = s.StaffID, StaffName, StaffSalary, [S
 	FROM SalesTransaction st
 		JOIN Staff s ON st.StaffID=s.StaffID
 		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
-		JOIN Bionic b ON b.BionicID=std.BionicID
-	WHERE BionicPrice*SalesQuantity > (SELECT AVG(BionicPrice) FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID)
+		JOIN Bionic b ON b.BionicID=std.BionicID,
+		(SELECT [AVGPrice] = AVG(BionicPrice) FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID) AS AVGPrice
+	WHERE BionicPrice*SalesQuantity > AVGPrice
 		AND StaffSalary < 5000000
 
 --7
@@ -54,8 +56,9 @@ SELECT [SalesId] = REPLACE(st.SalesID,'SA','Sales '), [SalesDate] = CONVERT(varc
 	FROM SalesTransaction st
 		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
 		JOIN Bionic b ON b.BionicID=std.BionicID
-		JOIN BionicType bt ON bt.BionicTypeID=b.BionicTypeID
-	WHERE BionicTypeDurability < (SELECT AVG(BionicTypeDurability) FROM BionicType)
+		JOIN BionicType bt ON bt.BionicTypeID=b.BionicTypeID,
+		(SELECT [AVGDur] = AVG(BionicTypeDurability) FROM BionicType) AS AVGDur
+	WHERE BionicTypeDurability < AVGDur
 		AND SalesDate >= CONVERT(datetime,'2016-1-1')
 
 --8
