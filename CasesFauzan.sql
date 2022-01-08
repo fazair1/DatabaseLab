@@ -6,3 +6,13 @@ SELECT st.SalesID, CustomerName, CustomerGender, [Total Quantity Purchased] = SU
 	WHERE CustomerGender LIKE 'Female'
 	GROUP BY st.SalesID, CustomerName, CustomerGender, SalesDate
 	HAVING SUM(SalesQuantity) > 7
+
+--5
+SELECT s.StaffName, [StaffSalary]=CONCAT('Rp. ',StaffSalary), StaffGender, [PurchaseDate] = (CONVERT(varchar,PurchaseDate,107)), VendorName
+	FROM Staff s 
+		JOIN PurchaseTransaction pt ON s.StaffID=pt.StaffID
+		JOIN Vendor v ON pt.VendorID=v.VendorID
+	WHERE StaffSalary > (SELECT AVG(StaffSalary) FROM Staff)
+		AND PurchaseDate LIKE '2020-%-%'
+
+--6
