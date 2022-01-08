@@ -23,3 +23,12 @@ SELECT st.SalesID, s.StaffID, StaffName, StaffSalary, [StaffGender]=LEFT(StaffGe
 		JOIN Bionic b ON b.BionicID=std.BionicID
 	WHERE BionicPrice*SalesQuantity > (SELECT AVG(BionicPrice) FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID)
 		AND StaffSalary < 5000000
+
+--7
+SELECT [SalesId] = REPLACE(st.SalesID,'SA','Sales '), [SalesDate] = CONVERT(varchar,SalesDate,107), [Total Quantity] = CONCAT(SalesQuantity, ' Pc(s)'), BionicName, [TypeName] = BionicTypeName, [TypeDurability] = BionicTypeDurability
+	FROM SalesTransaction st
+		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
+		JOIN Bionic b ON b.BionicID=std.BionicID
+		JOIN BionicType bt ON bt.BionicTypeID=b.BionicTypeID
+	WHERE BionicTypeDurability < (SELECT AVG(BionicTypeDurability) FROM BionicType)
+		AND SalesDate >= CONVERT(datetime,'2016-1-1')
