@@ -72,7 +72,8 @@ INSERT INTO Bionic VALUES
 ('BI009', 'TY008', 'Terminator',13,'2021-6-17',4250000),
 ('BI010', 'TY011', 'Zenirex Bar', 4 ,'2003-10-7', 785000),
 ('BI011', 'TY010', 'Fuji Tela', 2 ,'1989-04-22', 4285000),
-('BI012', 'TY012', 'Orico Sang', 9 ,'2001-09-09', 125000);
+('BI012', 'TY012', 'Orico Sang', 9 ,'2001-09-09', 125000),
+('BI013', 'TY004', 'ARMS', 3 ,'2021-1-06', 3000000);
 
 
 --Transaction Table
@@ -97,7 +98,9 @@ INSERT INTO PurchaseTransaction VALUES
 ('PU017', 'ST003', 'VE009','2018-10-09'),
 ('PU018', 'ST012', 'VE010','2018-07-25'),
 ('PU019', 'ST009', 'VE008','2018-03-01'),
-('PU020', 'ST012', 'VE009','2018-08-08');
+('PU020', 'ST012', 'VE009','2018-08-08'),
+('PU021', 'ST012', 'VE009','2018-03-01'),
+('PU022', 'ST002', 'VE004','2018-02-11');
 
 
 INSERT INTO SalesTransaction VALUES 
@@ -120,7 +123,9 @@ INSERT INTO SalesTransaction VALUES
 ('SA017', 'ST007', 'CU009','2020-11-16'),
 ('SA018', 'ST008', 'CU007','2020-08-22'),
 ('SA019', 'ST011', 'CU010','2020-07-07'),
-('SA020', 'ST009', 'CU008','2020-01-27');
+('SA020', 'ST009', 'CU008','2020-01-27'),
+('SA021', 'ST009', 'CU004','2019-07-20');
+
 
 --Transaction Detail Table
 
@@ -134,7 +139,7 @@ INSERT INTO PurchaseTransactionDetail VALUES
 ('PU005', 'BI003', 2),
 ('PU005', 'BI005', 7),
 ('PU005', 'BI006', 3),
-('PU006', 'BI006', 9),
+('PU006', 'BI013', 9),
 ('PU006', 'BI004', 2),
 ('PU007', 'BI005', 12),
 ('PU008', 'BI006', 30),
@@ -152,8 +157,10 @@ INSERT INTO PurchaseTransactionDetail VALUES
 ('PU018', 'BI011', 5),
 ('PU019', 'BI010', 14),
 ('PU019', 'BI012', 18),
-('PU020', 'BI010', 4);
- 
+('PU020', 'BI010', 4),
+('PU021', 'BI013', 4),
+('PU022', 'BI010', 2);
+
 
 INSERT INTO SalesTransactionDetail VALUES 
 ('SA001', 'BI003', 6),
@@ -164,8 +171,8 @@ INSERT INTO SalesTransactionDetail VALUES
 ('SA004', 'BI003', 5),
 ('SA005', 'BI001', 6),
 ('SA006', 'BI005', 5),
-('SA006', 'BI004', 4),
 ('SA006', 'BI006', 12),
+('SA006', 'BI004', 11),
 ('SA007', 'BI004', 2),
 ('SA008', 'BI006', 20),
 ('SA008', 'BI005', 7),
@@ -183,4 +190,5 @@ INSERT INTO SalesTransactionDetail VALUES
 ('SA019', 'BI011', 5),
 ('SA019', 'BI010', 8),
 ('SA020', 'BI012', 1),
-('SA020', 'BI010', 6);
+('SA020', 'BI010', 6),
+('SA021', 'BI010', 3);

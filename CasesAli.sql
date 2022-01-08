@@ -15,18 +15,18 @@ SELECT [VendorId] = REPLACE(VendorID, 'VE', 'Vendor '), [Total Quantity] = CONCA
 --9
 GO
 CREATE VIEW [LoyalCustomer] AS
-SELECT SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransactionDetail.SalesID), [Total Bionic Bought] = SalesQuantity
+SELECT [CustomerId] = SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransaction.CustomerID), [Total Bionic Bought] = SUM(SalesQuantity)
 	FROM Customer JOIN SalesTransaction ON SalesTransaction.CustomerID = Customer.CustomerID JOIN SalesTransactionDetail ON SalesTransactionDetail.SalesID = SalesTransaction.SalesID
 	WHERE SalesQuantity > 10
-	GROUP BY SalesTransaction.CustomerID, CustomerName,CustomerGender,SalesTransactionDetail.SalesID,SalesQuantity
+	GROUP BY SalesTransaction.CustomerID, CustomerName,CustomerGender,SalesTransactionDetail.SalesID
 	HAVING COUNT(SalesTransactionDetail.SalesID) > 1
 GO
 
 --10
 CREATE VIEW [StaffPurchaseRecap] AS
-SELECT PurchaseTransaction.StaffID, StaffName, StaffSalary, [Total Purchase Finished] = COUNT(PurchaseTransactionDetail.PurchaseID), [Total Bionic Purchased] = PurchaseQuantity
+SELECT [StaffId] = PurchaseTransaction.StaffID, StaffName, StaffSalary, [Total Purchase Finished] = COUNT(PurchaseTransactionDetail.PurchaseID), [Total Bionic Purchased] = SUM(PurchaseQuantity)
 	FROM Staff JOIN PurchaseTransaction ON PurchaseTransaction.StaffID = Staff.StaffID JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.PurchaseID = PurchaseTransaction.PurchaseID
 	WHERE YEAR(PurchaseDate) > 2016
-	GROUP BY PurchaseTransaction.StaffID, StaffName, StaffSalary, PurchaseTransactionDetail.PurchaseID,PurchaseQuantity
+	GROUP BY PurchaseTransaction.StaffID, StaffName, StaffSalary
 	HAVING COUNT(PurchaseTransactionDetail.PurchaseID) > 1
 GO
