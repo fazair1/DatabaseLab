@@ -10,16 +10,15 @@ SELECT [VendorId] = REPLACE(VendorID, 'VE', 'Vendor '), [Total Quantity] = CONCA
 			Bionic
 	) d
 	WHERE BionicTypeName LIKE 'Eye' AND PurchaseQuantity >= MaximumBionicStock
-	ORDER BY PurchaseQuantity ASC
-
+	ORDER BY PurchaseQuantity DESC
 
 --9
 GO
 CREATE VIEW [LoyalCustomer] AS
-SELECT SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransactionDetail.SalesID), [Total Bionic Bought] = SalesQuanity
+SELECT SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransactionDetail.SalesID), [Total Bionic Bought] = SalesQuantity
 	FROM Customer JOIN SalesTransaction ON SalesTransaction.CustomerID = Customer.CustomerID JOIN SalesTransactionDetail ON SalesTransactionDetail.SalesID = SalesTransaction.SalesID
-	WHERE SalesQuanity > 10
-	GROUP BY SalesTransaction.CustomerID, CustomerName,CustomerGender,SalesTransactionDetail.SalesID,SalesQuanity
+	WHERE SalesQuantity > 10
+	GROUP BY SalesTransaction.CustomerID, CustomerName,CustomerGender,SalesTransactionDetail.SalesID,SalesQuantity
 	HAVING COUNT(SalesTransactionDetail.SalesID) > 1
 GO
 
