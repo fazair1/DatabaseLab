@@ -21,8 +21,7 @@ CREATE PROCEDURE CustomerBuyFromStaff
 	@CustomerID CHAR(5),
 	@SalesDate DATE,
 	@BionicIDSales CHAR(5),
-	@SalesQuantity INT,
-	@n INT
+	@SalesQuantity INT
 AS
 	BEGIN
 		INSERT INTO SalesTransaction
@@ -39,21 +38,6 @@ AS
 		FROM Bionic JOIN SalesTransactionDetail ON Bionic.BionicID = SalesTransactionDetail.BionicID
 		WHERE SalesID = @SalesID
 	END
-	IF @n > 1
-		BEGIN
-			DECLARE @i INT= 1
-			WHILE @i< =@n
-				BEGIN
-					INSERT INTO SalesTransactionDetail
-					VALUES(@SalesID, @BionicIDSales, @SalesQuantity)
-					SET NOCOUNT ON;
-					UPDATE Bionic
-					SET BionicStock = BionicStock - @SalesQuantity
-					FROM Bionic JOIN SalesTransactionDetail ON Bionic.BionicID = SalesTransactionDetail.BionicID
-					WHERE SalesID = @SalesID
-					SET @i = @i + 1
-				END
-		END
 GO
 
 GO
@@ -63,9 +47,7 @@ CREATE PROCEDURE StaffBuyFromVendor
 	@VendorID CHAR(5),
 	@PurchaseDate DATE,
 	@BionicIDPurchase CHAR(5),
-	@PurchaseQuantity INT,
-	@n INT
-
+	@PurchaseQuantity INT
 AS
 	BEGIN
 		INSERT INTO PurchaseTransaction
@@ -82,21 +64,6 @@ AS
 		FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
 		WHERE PurchaseID = @PurchaseID
 	END
-	IF @n > 1
-		BEGIN
-			DECLARE @i INT = 1
-			WHILE @i<=@n
-				BEGIN
-					INSERT INTO PurchaseTransactionDetail
-					VALUES(@PurchaseID, @BionicIDPurchase, @PurchaseQuantity)
-					SET NOCOUNT ON;
-					UPDATE Bionic
-					SET BionicStock = BionicStock + @PurchaseQuantity
-					FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
-					WHERE PurchaseID = @PurchaseID
-					SET @i = @i + 1
-				END
-		END
 GO
 
 -- 1. 
@@ -114,7 +81,7 @@ EXEC InsertNewCustomer @customerid = 'CU013', @name = 'Bimo Putra Two Sibutarbut
 SELECT * FROM Customer
 
 
-EXEC CustomerBuyFromStaff @SalesID = 'SA022', @StaffIDSales = 'ST005', @CustomerID = 'CU013', @SalesDate = '2020-04-17', @BionicIDSales = 'BI005' , @SalesQuantity = 5, @n = 1
+EXEC CustomerBuyFromStaff @SalesID = 'SA022', @StaffIDSales = 'ST005', @CustomerID = 'CU013', @SalesDate = '2020-04-17', @BionicIDSales = 'BI005' , @SalesQuantity = 5
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN SalesTransactionDetail ON SalesTransactionDetail.BionicID = Bionic.BionicID 
@@ -122,7 +89,7 @@ SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,Bion
 SELECT * FROM SalesTransaction JOIN SalesTransactionDetail ON SalesTransaction.SalesID = SalesTransactionDetail.SalesID
 
 
-EXEC StaffBuyFromVendor @PurchaseID = 'PU023' , @StaffIDPurchase = 'ST007', @VendorID = 'VE006', @PurchaseDate = '2020-05-12', @BionicIDPurchase = 'BI005', @PurchaseQuantity = 20, @n = 1
+EXEC StaffBuyFromVendor @PurchaseID = 'PU023' , @StaffIDPurchase = 'ST007', @VendorID = 'VE006', @PurchaseDate = '2020-05-12', @BionicIDPurchase = 'BI005', @PurchaseQuantity = 20
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
@@ -131,9 +98,10 @@ SELECT * FROM PurchaseTransaction JOIN PurchaseTransactionDetail ON PurchaseTran
 
 
 ROLLBACK
+COMMIT
 -- 2. Seorang Staff dengan StaffID ST002 pergi ke Vendor untuk menyetok Produk Bionic, ia melakukan Purchase Transaction pada tanggal 2021-07-29 dengan VendorID VE010, dalam purchase transaction itu ia membeli 15 produk Bionic dengan BionicID BI008. pada tanggal 2022-02-07 seorang Customer lama dengan CustomerID CU003 bertemu dengan Staff Sales dengan StaffID ST001 untuk membeli 2 produk Bionic dengan BionicID BI003, setelah dicek stok produknya mencukupi sehingga customer tersebut langsung membelinya.
 BEGIN TRAN
-EXEC CustomerBuyFromStaff @SalesID = 'SA023', @StaffIDSales = 'ST001', @CustomerID = 'CU003', @SalesDate = '2021-02-07', @BionicIDSales = 'BI003' , @SalesQuantity = 2, @n = 1
+EXEC CustomerBuyFromStaff @SalesID = 'SA023', @StaffIDSales = 'ST001', @CustomerID = 'CU003', @SalesDate = '2021-02-07', @BionicIDSales = 'BI003' , @SalesQuantity = 2
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN SalesTransactionDetail ON SalesTransactionDetail.BionicID = Bionic.BionicID 
@@ -141,7 +109,7 @@ SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,Bion
 SELECT * FROM SalesTransaction JOIN SalesTransactionDetail ON SalesTransaction.SalesID = SalesTransactionDetail.SalesID
 
 
-EXEC StaffBuyFromVendor @PurchaseID = 'PU024' , @StaffIDPurchase = 'ST002', @VendorID = 'VE010', @PurchaseDate = '2021-07-29', @BionicIDPurchase = 'BI008', @PurchaseQuantity = 15, @n = 1
+EXEC StaffBuyFromVendor @PurchaseID = 'PU024' , @StaffIDPurchase = 'ST002', @VendorID = 'VE010', @PurchaseDate = '2021-07-29', @BionicIDPurchase = 'BI008', @PurchaseQuantity = 15
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
@@ -150,6 +118,7 @@ SELECT * FROM PurchaseTransaction JOIN PurchaseTransactionDetail ON PurchaseTran
 
 
 ROLLBACK
+COMMIT
 -- 3.  
 -- CustomerID CU014
 -- CustomerName Raka Rebran Ft Lilia 
@@ -165,7 +134,7 @@ EXEC InsertNewCustomer @customerid = 'CU014', @name = 'Raka Rebran Ft Lilia', @p
 SELECT * FROM Customer
 
 
-EXEC CustomerBuyFromStaff @SalesID = 'SA024', @StaffIDSales = 'ST012', @CustomerID = 'CU014', @SalesDate = '2020-01-27', @BionicIDSales = 'BI012' , @SalesQuantity = 3, @n = 1
+EXEC CustomerBuyFromStaff @SalesID = 'SA024', @StaffIDSales = 'ST012', @CustomerID = 'CU014', @SalesDate = '2020-01-27', @BionicIDSales = 'BI012' , @SalesQuantity = 3
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN SalesTransactionDetail ON SalesTransactionDetail.BionicID = Bionic.BionicID 
@@ -173,7 +142,7 @@ SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,Bion
 SELECT * FROM SalesTransaction JOIN SalesTransactionDetail ON SalesTransaction.SalesID = SalesTransactionDetail.SalesID
 
 
-EXEC StaffBuyFromVendor @PurchaseID = 'PU025' , @StaffIDPurchase = 'ST009', @VendorID = 'VE004', @PurchaseDate = '2020-01-27', @BionicIDPurchase = 'BI004', @PurchaseQuantity = 15, @n = 1
+EXEC StaffBuyFromVendor @PurchaseID = 'PU025' , @StaffIDPurchase = 'ST009', @VendorID = 'VE004', @PurchaseDate = '2020-01-27', @BionicIDPurchase = 'BI004', @PurchaseQuantity = 15
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
@@ -182,16 +151,18 @@ SELECT * FROM PurchaseTransaction JOIN PurchaseTransactionDetail ON PurchaseTran
 
 
 ROLLBACK
+COMMIT
 -- 4. Pada tanggal 2021-01-09 seorang Customer dengan CustomerID CU012 pergi untuk membeli 3 produk Bionic dengan BionicID BI007 dan 1 produk Bionic dengan BionicID BI011, ia bertemu dengan Staff dengan StaffID ST006, staff itu pergi untuk mengecek ketersediaan produk, setelah dicek ternyata stoknya masih banyak sehingga customer tersebut bisa membeli semua produk yang di inginkan. 2 hari kemudian pada tanggal 2021-01-11 Staff tersebut pergi ke tempat vendor dengan VendorID VE001 untuk membeli 5 stok Produk Bionic dengan BionicID BI010.
 BEGIN TRAN
-EXEC CustomerBuyFromStaff @SalesID = 'SA025', @StaffIDSales = 'ST006', @CustomerID = 'CU012', @SalesDate = '2021-01-09', @BionicIDSales = 'BI007' , @SalesQuantity = 3, @n = 2 -- @BionicIDSales = 'BI011' , @SalesQuantity = 1
+EXEC CustomerBuyFromStaff @SalesID = 'SA025', @StaffIDSales = 'ST006', @CustomerID = 'CU012', @SalesDate = '2021-01-09', @BionicIDSales = 'BI007' , @SalesQuantity = 3
+EXEC CustomerBuyFromStaff @SalesID = 'SA025', @StaffIDSales = 'ST006', @CustomerID = 'CU012', @SalesDate = '2021-01-09', @BionicIDSales = 'BI011' , @SalesQuantity = 1
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN SalesTransactionDetail ON SalesTransactionDetail.BionicID = Bionic.BionicID 
 	WHERE SalesID LIKE 'SA025'
 SELECT * FROM SalesTransaction JOIN SalesTransactionDetail ON SalesTransaction.SalesID = SalesTransactionDetail.SalesID
 
 
-EXEC StaffBuyFromVendor @PurchaseID = 'PU026' , @StaffIDPurchase = 'ST006', @VendorID = 'VE001', @PurchaseDate = '2021-01-11', @BionicIDPurchase = 'BI010', @PurchaseQuantity = 5, @n = 1
+EXEC StaffBuyFromVendor @PurchaseID = 'PU026' , @StaffIDPurchase = 'ST006', @VendorID = 'VE001', @PurchaseDate = '2021-01-11', @BionicIDPurchase = 'BI010', @PurchaseQuantity = 5
 
 SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,BionicPrice 
 	FROM Bionic JOIN PurchaseTransactionDetail ON PurchaseTransactionDetail.BionicID = Bionic.BionicID 
@@ -199,4 +170,6 @@ SELECT Bionic.BionicID,BionicTypeID,BionicName,BionicStock,BionicLaunchDate,Bion
 SELECT * FROM PurchaseTransaction JOIN PurchaseTransactionDetail ON PurchaseTransaction.PurchaseID = PurchaseTransactionDetail.PurchaseID
 
 
+
 ROLLBACK
+COMMIT
