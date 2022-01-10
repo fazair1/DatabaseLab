@@ -24,7 +24,7 @@ SELECT [SalesId] = st.SalesID, CustomerName, CustomerGender, [Total Quantity Pur
 	HAVING SUM(SalesQuantity) > 7
 
 --4
-SELECT	[Purchase Id] = REPLACE(PurchaseID, 'PU', 'Purchase '), [Total Purchase Detail] = COUNT(PurchaseTransactionDetail.PurchaseID), [Highest Bionic Price] = MAX(BionicPrice), BionicTypeName
+SELECT	[Purchase Id] = REPLACE(PurchaseID, 'PU', 'Purchase '), [Total Purchase Detail] = COUNT(PurchaseTransactionDetail.PurchaseID), [Highest Bionic Price] = MAX(BionicPrice), [TypeName] = BionicTypeName
 	FROM ((PurchaseTransactionDetail 
 	INNER JOIN Bionic ON PurchaseTransactionDetail.BionicID = Bionic.BionicID) 
 	INNER JOIN BionicType ON Bionic.BionicTypeID = BionicType.BionicTypeID)
