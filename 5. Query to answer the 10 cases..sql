@@ -37,7 +37,8 @@ SELECT s.StaffName, [StaffSalary]=CONCAT('Rp. ',StaffSalary), StaffGender, [Purc
 	FROM Staff s 
 		JOIN PurchaseTransaction pt ON s.StaffID=pt.StaffID
 		JOIN Vendor v ON pt.VendorID=v.VendorID,
-		(SELECT [AVGSalary] = AVG(StaffSalary) FROM Staff) AS AVGSalary
+		(SELECT [AVGSalary] = AVG(StaffSalary) 
+		FROM Staff) AS AVGSalary
 	WHERE StaffSalary > AVGSalary
 		AND PurchaseDate LIKE '2020-%-%'
 
@@ -47,7 +48,8 @@ SELECT [SalesId] = st.SalesID, [StaffId] = s.StaffID, StaffName, StaffSalary, [S
 		JOIN Staff s ON st.StaffID=s.StaffID
 		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
 		JOIN Bionic b ON b.BionicID=std.BionicID,
-		(SELECT [AVGPrice] = AVG(BionicPrice) FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID) AS AVGPrice
+		(SELECT [AVGPrice] = AVG(BionicPrice) 
+		FROM SalesTransactionDetail std JOIN Bionic b ON std.BionicID=b.BionicID) AS AVGPrice
 	WHERE BionicPrice*SalesQuantity > AVGPrice
 		AND StaffSalary < 5000000
 
@@ -57,28 +59,25 @@ SELECT [SalesId] = REPLACE(st.SalesID,'SA','Sales '), [SalesDate] = CONVERT(varc
 		JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
 		JOIN Bionic b ON b.BionicID=std.BionicID
 		JOIN BionicType bt ON bt.BionicTypeID=b.BionicTypeID,
-		(SELECT [AVGDur] = AVG(BionicTypeDurability) FROM BionicType) AS AVGDur
+		(SELECT [AVGDur] = AVG(BionicTypeDurability) 
+		FROM BionicType) AS AVGDur
 	WHERE BionicTypeDurability < AVGDur
 		AND SalesDate >= CONVERT(datetime,'2016-1-1')
 
 --8
-SELECT [VendorId] = REPLACE(VendorID, 'VE', 'Vendor '), [Total Quantity] = CONCAT(PurchaseQuantity, ' Pc(s)'), PurchaseTransactionDetail.BionicID, BionicTypeName, BionicTypeDurability,BionicStock
+SELECT [VendorId] = REPLACE(VendorID, 'VE', 'Vendor '), [Total Quantity] = CONCAT(PurchaseQuantity, ' Pc(s)'), [BionicId]=PurchaseTransactionDetail.BionicID, [TypeName] = BionicTypeName, [TypeDurability] = BionicTypeDurability
 	FROM Bionic INNER JOIN BionicType ON Bionic.BionicTypeID = BionicType.BionicTypeID 
 				INNER JOIN PurchaseTransactionDetail ON Bionic.BionicID = PurchaseTransactionDetail.BionicID 
 				INNER JOIN PurchaseTransaction ON PurchaseTransactionDetail.PurchaseID = PurchaseTransaction.PurchaseID,
-				(
-		SELECT
-			[MaximumBionicStock] = MAX(BionicStock)
-		FROM
-			Bionic
-	) d
+				(SELECT [MaximumBionicStock] = MAX(BionicStock)
+				FROM Bionic) AS MaximumBionicStock
 	WHERE BionicTypeName LIKE 'Eye' AND PurchaseQuantity >= MaximumBionicStock
 	ORDER BY PurchaseQuantity DESC
 
 --9
 GO
 CREATE VIEW [LoyalCustomer] AS
-SELECT [CustomerId] = SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransaction.CustomerID), [Total Bionic Bought] = SUM(SalesQuantity)
+SELECT [CustomerId] = SalesTransaction.CustomerID, CustomerName, CustomerGender, [Total Transaction] = COUNT(SalesTransaction.CustomerID), [Total Bionic Bought] = CONCAT(SUM(SalesQuantity),' Pc(s)')
 	FROM Customer JOIN SalesTransaction ON SalesTransaction.CustomerID = Customer.CustomerID JOIN SalesTransactionDetail ON SalesTransactionDetail.SalesID = SalesTransaction.SalesID
 	WHERE SalesQuantity > 10
 	GROUP BY SalesTransaction.CustomerID, CustomerName,CustomerGender,SalesTransactionDetail.SalesID
