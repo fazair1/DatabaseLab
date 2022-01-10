@@ -15,7 +15,7 @@ SELECT [StaffId] = Staff.StaffID, StaffName, StaffSalary, [Total Bionic Sold] = 
 	HAVING SUM(SalesQuantity)>10
 
 --3
-SELECT [SalesId] = st.SalesID, CustomerName, CustomerGender, [Total Quantity Purchased] = SUM(SalesQuantity), [Total Bionic Purchased]= COUNT(BionicID), [Sales Date] = (CONVERT(varchar,SalesDate,7))
+SELECT [SalesId] = st.SalesID, CustomerName, CustomerGender, [Total Quantity Purchased] = SUM(SalesQuantity), [Total Bionic Purchased]= COUNT(BionicID), [Sales Date] = (CONVERT(varchar,SalesDate,107))
 	FROM SalesTransaction st 
 			JOIN SalesTransactionDetail std ON st.SalesID=std.SalesID
 			JOIN Customer c ON st.CustomerID=c.CustomerID
